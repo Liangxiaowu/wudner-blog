@@ -27,10 +27,10 @@
 
 - jdk：1.8
 - Mysql 8.0.19
-- spring boot 2.x
+- Spring Boot 2.x
 - MyBatis
 - druid
-- redis
+- Redis
 - swagger2
 - elasticsearch：7.7.0
 
