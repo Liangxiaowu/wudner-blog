@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wudner.mapper.ArticleMapper">
+
+    <resultMap id="ArticleMap" type="com.wudner.pojo.Article">
+        <id property="id" column="id" />
+        <result property="title" column="title" />
+        <result property="content" column="content" />
+        <result property="readNumber" column="read_number" />
+        <result property="topNum" column="top_num" />
+        <result property="status" column="status" />
+        <result property="createdTime" column="created_time" />
+        <association property="user" javaType="com.wudner.pojo.User">
+                <id property="uid" column="uid" />
+                <result property="username" column="username" />
+        </association>
+    </resultMap>
+    <select id="getArticleById" resultMap="ArticleMap" parameterType="int">
+        SELECT a.*,u.id as uid,u.username FROM article a,user u  WHERE a.user_id=u.id AND a.id=#{id}
+    </select>
+
+    <update id="incrementReadNumber"  parameterType="int" >
+        UPDATE article SET read_number=read_number+1 where id=#{id}
+    </update>
+</mapper>
