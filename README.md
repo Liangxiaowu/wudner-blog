@@ -25,7 +25,7 @@
 
 #### 技术点
 
-- jdk：1.8
+- JDK：1.8
 - Mysql 8.0.19
 - Spring Boot 2.x
 - MyBatis

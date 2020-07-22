@@ -18,8 +18,7 @@ public class Swagger2 {
 
 
     //是否开启swagger，正式环境一般是需要关闭的
-    @Value("${swagger.enabled}")
-    private boolean enableSwagger;
+    private static final boolean enableSwagger = true;
 
     @Bean
     public Docket createRestApi() {

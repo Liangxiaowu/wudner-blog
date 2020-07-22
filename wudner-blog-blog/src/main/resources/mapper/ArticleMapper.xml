@@ -10,13 +10,41 @@
         <result property="topNum" column="top_num" />
         <result property="status" column="status" />
         <result property="createdTime" column="created_time" />
-        <association property="user" javaType="com.wudner.pojo.User">
-                <id property="uid" column="uid" />
-                <result property="username" column="username" />
+        <association property="category" javaType="com.wudner.pojo.Category">
+                <id property="id" column="cid" />
+                <result property="name" column="name" />
         </association>
     </resultMap>
+
+    <sql id="article_field">
+        a.id,a.title,a.first_img,a.content,a.read_number,a.top_num,a.created_at,u.username as createName
+    </sql>
+
+    <select id="selectArticleList"   resultMap="ArticleMap">
+
+        SELECT  a.*,c.id as cid,c.name  FROM  article as a
+        LEFT JOIN article_category as ac on a.id=ac.article_id
+        LEFT JOIN category AS c on ac.category_id = c.id
+        WHERE a.status=1
+        <if test="keyword != null and keyword != ''">
+            AND a.title like concat('%',#{keyword}, '%')
+        </if>
+        <if test="tag != null and tag != ''">
+            AND c.name = #{tag}
+        </if>
+        order by a.created_time desc
+
+    </select>
+
+    <select id="selectArticleTop"  resultType="com.wudner.pojo.ArticleTop">
+       select  id,title,read_number as readNumber from article where status=1 order by read_number  desc limit 0,5
+    </select>
+
     <select id="getArticleById" resultMap="ArticleMap" parameterType="int">
-        SELECT a.*,u.id as uid,u.username FROM article a,user u  WHERE a.user_id=u.id AND a.id=#{id}
+        SELECT  a.*,c.id as cid,c.name  FROM  article as a
+        LEFT JOIN article_category as ac on a.id=ac.article_id
+        LEFT JOIN category AS c on ac.category_id = c.id
+        WHERE a.status=1 AND a.id=#{id}
     </select>
 
     <update id="incrementReadNumber"  parameterType="int" >

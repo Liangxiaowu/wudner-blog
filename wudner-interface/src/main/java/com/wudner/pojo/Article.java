@@ -4,14 +4,14 @@ package com.wudner.pojo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.elasticsearch.annotations.Document;
+//import org.springframework.data.elasticsearch.annotations.Document;
 
 import java.io.Serializable;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(indexName = "blog", type = "_doc")
+//@Document(indexName = "blog", type = "_doc")
 
 public class Article implements Serializable {
 
@@ -29,6 +29,6 @@ public class Article implements Serializable {
 
     private String createdTime;
 
-    private User user;
+    private Category category;
 
 }

@@ -5,6 +5,7 @@ import com.wudner.pojo.Article;
 import com.wudner.service.ArticleService;
 import com.wudner.util.ApiResult;
 import com.wudner.util.IpUtil;
+import com.wudner.util.PageObj;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -27,10 +28,14 @@ public class ArticleController {
     @ApiOperation(value = "文章列表")
     @GetMapping(value = "/article")
     public ApiResult list(
-            @Valid @RequestBody  ArticleDto articleDto
+            @RequestParam(name = "pageNo") int pageNo,
+            @RequestParam(name = "pageSize") int pageSize,
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) String tag
             ) {
-        Map list = articleService.list(Integer.parseInt(articleDto.getPageNo()), Integer.parseInt(articleDto.getPageSize()), articleDto.getKeyword());
-        return new ApiResult<Map>(0, "文章列表", list);
+
+        PageObj<Article> list = articleService.list(pageNo, pageSize, keyword, tag);
+        return new ApiResult<PageObj>(0, "文章列表", list);
     }
 
     @ApiOperation(value = "文章详情")
